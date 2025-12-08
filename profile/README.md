@@ -4,7 +4,7 @@
 
 ![Jala University](https://img.shields.io/badge/Jala_University-Capstone_Projects-00D4FF?style=for-the-badge)
 ![Location](https://img.shields.io/badge/Location-Colombia_🇨🇴-FFD700?style=for-the-badge)
-![Students](https://img.shields.io/badge/Built_by-Computer_Science_Students-4CAF50?style=for-the-badge)
+![Students](https://img.shields.io/badge/Built_by-Commercial Software Engineering with a concentration in Design and Architecture-4CAF50?style=for-the-badge)
 
 **Final projects that bridge academic learning with real-world software engineering**
 
@@ -18,7 +18,7 @@
 
 ## 🌟 **About This Organization**
 
-**JalaU-Capstones** is the official repository collection for capstone projects developed by Computer Science students at **Jala University**. Each project represents the culmination of coursework, demonstrating mastery of software engineering principles, problem-solving abilities, and the complete development lifecycle.
+**JalaU-Capstones** is the official repository collection for capstone projects developed by Commercial Software Engineering with a concentration in {Design and Architecture} students at **Jala University**. Each project represents the culmination of coursework, demonstrating mastery of software engineering principles, problem-solving abilities, and the complete development lifecycle.
 
 ### **What Makes Our Projects Special**
 
