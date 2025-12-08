@@ -4,7 +4,7 @@
 
 ![Jala University](https://img.shields.io/badge/Jala_University-Capstone_Projects-00D4FF?style=for-the-badge)
 ![Location](https://img.shields.io/badge/Location-Colombia_🇨🇴-FFD700?style=for-the-badge)
-![Students](https://img.shields.io/badge/Built_by-Commercial Software Engineering with a concentration in Design and Architecture-4CAF50?style=for-the-badge)
+![Students](https://img.shields.io/badge/Built_by-Commercial_Software_Engineering_with_a_concentration_in_Design_and_Architecture-4CAF50?style=for-the-badge)
 
 **Final projects that bridge academic learning with real-world software engineering**
 
