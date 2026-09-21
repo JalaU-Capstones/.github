@@ -1,0 +1,139 @@
+# ---------------------------------------------------------------------------
+# JalaU-Capstones Organization README Updater
+# ---------------------------------------------------------------------------
+# Regenerates the dynamic sections of profile/README.md (Featured Projects
+# and Project Statistics) by querying the GitHub REST API.
+#
+# Triggers:
+#   - schedule:           Every 6 hours at minute 0 (UTC).
+#   - workflow_dispatch:  Manual run from the Actions tab.
+#   - push:               Changes to the README, the script, or this workflow.
+#
+# Required secrets:
+#   ORG_READ_TOKEN   Fine-grained PAT with "Metadata: Read" + "Contents: Read"
+#                    on all JalaU-Capstones repositories. Used ONLY to read.
+#
+# The default GITHUB_TOKEN is used for the push-back to the repository, so
+# no extra write scopes are needed on the PAT.
+# ---------------------------------------------------------------------------
+
+name: Update Organization README
+
+on:
+  schedule:
+    # Minute 0 of hours 0, 6, 12 and 18 UTC (every 6 hours)
+    - cron: '0 */6 * * *'
+
+  workflow_dispatch:
+    inputs:
+      force:
+        description: 'Force regeneration even if no changes are detected'
+        required: false
+        default: 'false'
+        type: choice
+        options:
+          - 'false'
+          - 'true'
+
+  push:
+    branches:
+      - main
+    paths:
+      - 'profile/README.md'
+      - 'scripts/update_readme.py'
+      - 'requirements.txt'
+      - '.github/workflows/update-readme.yml'
+
+# Only one concurrent run at a time; cancel pending runs of the same ref
+concurrency:
+  group: update-readme-${{ github.ref }}
+  cancel-in-progress: true
+
+# Principle of least privilege: only the push step needs write access
+permissions:
+  contents: write
+
+jobs:
+  update-readme:
+    name: Regenerate profile/README.md
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+
+    steps:
+      # -----------------------------------------------------------------
+      # 1. Checkout the .github repository
+      # -----------------------------------------------------------------
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 1
+          token: ${{ secrets.GITHUB_TOKEN }}
+
+      # -----------------------------------------------------------------
+      # 2. Set up Python 3.12 with pip cache
+      # -----------------------------------------------------------------
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+          cache: 'pip'
+          cache-dependency-path: requirements.txt
+
+      # -----------------------------------------------------------------
+      # 3. Install dependencies
+      # -----------------------------------------------------------------
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt
+
+      # -----------------------------------------------------------------
+      # 4. Run the updater script
+      # -----------------------------------------------------------------
+      - name: Run README updater
+        env:
+          GH_TOKEN: ${{ secrets.ORG_READ_TOKEN }}
+          ORG: JalaU-Capstones
+          README_PATH: profile/README.md
+        run: |
+          echo "::group::Running update_readme.py"
+          python scripts/update_readme.py
+          echo "::endgroup::"
+
+      # -----------------------------------------------------------------
+      # 5. Commit and push ONLY if the README changed
+      # -----------------------------------------------------------------
+      - name: Detect changes
+        id: changes
+        run: |
+          if git diff --quiet -- profile/README.md; then
+            echo "changed=false" >> "$GITHUB_OUTPUT"
+            echo "No changes detected in profile/README.md."
+          else
+            echo "changed=true" >> "$GITHUB_OUTPUT"
+            echo "Changes detected — will commit."
+          fi
+
+      - name: Commit and push
+        if: steps.changes.outputs.changed == 'true'
+        run: |
+          git config user.name  "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add profile/README.md
+          git commit -m "chore(readme): auto-update organization README [skip ci]"
+          git push
+
+      # -----------------------------------------------------------------
+      # 6. Summary in the Actions UI
+      # -----------------------------------------------------------------
+      - name: Job summary
+        if: always()
+        run: |
+          {
+            echo "### README Updater Summary"
+            echo ""
+            echo "- **Organization:** \`${{ env.ORG || 'JalaU-Capstones' }}\`"
+            echo "- **README path:** \`profile/README.md\`"
+            echo "- **Changes detected:** \`${{ steps.changes.outputs.changed || 'unknown' }}\`"
+            echo "- **Triggered by:** \`${{ github.event_name }}\`"
+          } >> "$GITHUB_STEP_SUMMARY"
