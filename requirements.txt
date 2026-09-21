@@ -1,0 +1,17 @@
+# ---------------------------------------------------------------------------
+# JalaU-Capstones Organization README Updater
+# ---------------------------------------------------------------------------
+# Python dependencies for scripts/update_readme.py
+#
+# Install with:
+#   pip install -r requirements.txt
+#
+# Update with:
+#   pip install --upgrade -r requirements.txt
+# ---------------------------------------------------------------------------
+
+# HTTP client for GitHub REST API
+requests>=2.31.0,<3.0.0
+
+# Low-level HTTP library used by requests; explicit to get retry utilities
+urllib3>=2.0.0,<3.0.0
