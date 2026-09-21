@@ -38,6 +38,328 @@ const capstonePhilosophy = {
 ## 🚀 **Featured Projects**
 
 <!-- PROJECTS_START -->
+### 🏆 **Enterprise Architecture Showcase**
+
+<table>
+<tr>
+<td width="100%">
+
+#### 🔧 [CIS Phase 1: User Management API](https://github.com/JalaU-Capstones/CIS-Fase1-User-Management-API)
+
+**Legacy Integration REST API**
+
+REST API for employee user management (CRUD) that coexists with the legacy CLI Users System.
+
+**Highlights:**
+
+- 🔗 RESTful API with legacy system coexistence
+
+- 👥 Employee user management domain
+
+- 🔄 Migration path from CLI to API architecture
+
+- 📊 Enterprise-grade error handling
+
+**Stack:** `Java` `Spring Boot` `REST API` `JPA`
+
+</td>
+<td width="100%">
+
+#### 🏗️ [CIS Phase 2: Crowdsourced Ideation](https://github.com/JalaU-Capstones/cis-phase2-crowdsourced-ideation)
+
+**Modern .NET 8 Minimal API**
+
+Phase 2 of the Crowdsourced Ideation Solution (CIS). This service is a .NET 8 Minimal API following Vertical Slice Architecture (ADR-004), using EF Core 8 (ADR-003) and xUnit + FluentAssertions + Moq (ADR-005).
+
+**Highlights:**
+
+- 📐 Vertical Slice Architecture (ADR-004)
+
+- 🗄️ EF Core 8 with best practices (ADR-003)
+
+- 🧪 xUnit + FluentAssertions + Moq (ADR-005)
+
+- 🚀 Production-ready API design
+
+**Stack:** `C#` `.NET 8` `EF Core` `Minimal APIs` `Vertical Slice`
+
+</td>
+</tr>
+<tr>
+<td width="100%">
+
+#### 🎓 [Users CLI](https://github.com/JalaU-Capstones/userscli)
+
+**Software Development 3 Companion**
+
+This is a basic JAVA companion app (CLI) for Software Development 3, allowing the  CRUD of users.
+
+**Highlights:**
+
+- 💻 CLI interface design patterns
+
+- 🔄 Complete CRUD functionality
+
+- 🏗️ Clean separation of concerns
+
+- 📚 Educational reference implementation
+
+**Stack:** `Java` `Console App` `OOP Principles`
+
+</td>
+<td width="33%"></td>
+</tr>
+</table>
+
+### 🔬 **Scientific & Analytical Computing**
+
+<table>
+<tr>
+<td width="100%">
+
+#### 🧮 [Math Solver Chatbot](https://github.com/JalaU-Capstones/math-solver-chatbot)
+
+**AI-Powered Educational Tool**
+
+AI-powered math problem solver with step-by-step solutions. Perfect for students and educators.
+
+**Highlights:**
+
+- 🤖 AI-powered step-by-step solutions
+
+- 🎓 Educational focus with explanations
+
+- 🌐 Web-based interface
+
+- 📊 Multiple mathematical domains
+
+**Stack:** `JavaScript` `AI/ML` `Web App`
+
+</td>
+<td width="100%">
+
+#### 🛰️ [TopoVision](https://github.com/JalaU-Capstones/topovision)
+
+**3D Topographic Analysis System**
+
+A Python-based system for topographic data visualization, real-time analysis, and calculus-based gradient computation.
+
+**Highlights:**
+
+- 📦 Available on PyPI (`pip install topovision`)
+
+- 🎥 Real-time video capture & OpenCV processing
+
+- 🧮 Mathematical gradient computation
+
+- 🗺️ Interactive 3D terrain visualizations
+
+**Stack:** `Python` `OpenCV` `NumPy` `Matplotlib` `Tkinter`
+
+</td>
+</tr>
+</table>
+
+### 🎮 **Game Development Portfolio**
+
+<table>
+<tr>
+<td width="100%">
+
+#### 🎮 [Arcade Maze Chomper](https://github.com/JalaU-Capstones/arcade-maze-chomper)
+
+**Cross-Platform Game Development**
+
+A modern recreation of the classic Pac-Man arcade game built with .NET 9.0 and Avalonia UI for cross-platform desktop environments.
+
+**Highlights:**
+
+- 🎯 Cross-platform desktop (Windows/Linux/Mac)
+
+- 🎨 Avalonia UI modern interface
+
+- 🧠 Game loop architecture & state management
+
+**Stack:** `C#` `.NET 9` `Avalonia UI` `Game Dev`
+
+</td>
+<td width="100%">
+
+#### 🏚️ [El Secreto de la Mansión Oscura](https://github.com/JalaU-Capstones/El_Secreto_de_la_Mansion_Oscura)
+
+**Mystery Adventure Game**
+
+Un emocionante juego de misterio y deducción desarrollado en Python utilizando Pygame para la interfaz gráfica y Z3-Solver para la lógica de resolución de acertijos. Sumérgete en una historia llena de intriga, pistas y múltiples finales.
+
+**Stack:** `Python` `Pygame` `Z3-Solver` `Game Logic`
+
+</td>
+<td width="100%">
+
+#### 🧬 [Game of Life](https://github.com/JalaU-Capstones/GameOfLife)
+
+**Cellular Automata Simulation**
+
+El proyecto implementa el Juego de la Vida de Conway, un autómata celular ideado por el matemático británico John Horton Conway en 1970. Este juego simula la evolución de células en una cuadrícula 2D, donde cada célula puede estar viva o muerta, y su estado cambia en cada generación según reglas simples.
+
+**Stack:** `Java` `Cellular Automata` `Concurrency`
+
+</td>
+</tr>
+<tr>
+<td width="100%">
+
+#### 🌀 [Gravity Shift](https://github.com/JalaU-Capstones/gravity-shift)
+
+**Physics-Based Platformer**
+
+Gravity Shift is a 2D space survival platformer set in the year 2187, where Earth has become uninhabitable and humanity's last colony on Titan faces catastrophic failure. Players control Alex Rook, a space engineer trapped in a fractured space station with constantly changing gravitational fields.
+
+**Stack:** `Python` `Physics Engine` `Pygame`
+
+</td>
+<td width="100%">
+
+#### ⚔️ [March of the Legion](https://github.com/JalaU-Capstones/march-of-the-Legion)
+
+**Algorithm Visualization**
+
+March of the Legion is a Java application that transforms abstract sorting algorithms into a visual military battlefield simulation. It is designed from the ground up using SOLID principles to create a clean, modular, and extensible architecture.
+
+**Stack:** `Java` `JavaFX` `Algorithms` `SOLID`
+
+</td>
+<td width="100%">
+
+#### 🐍 [Snake Lineal](https://github.com/JalaU-Capstones/snake-lineal)
+
+**Mathematical Game Dev**
+
+Snake Lineal is an educational web-based implementation of the classic Snake game enhanced with linear algebra concepts. This project demonstrates practical applications of vectors, transformations, and collision detection in game development while providing an engaging gameplay experience.
+
+**Stack:** `JavaScript` `Linear Algebra` `Canvas API`
+
+</td>
+</tr>
+</table>
+
+### 💼 **Business Applications & Productivity**
+
+<table>
+<tr>
+<td width="100%">
+
+#### 💳 [Credit Card Module](https://github.com/JalaU-Capstones/credit-card-module)
+
+**Financial Benefits Tracker**
+
+**Highlights:**
+
+- 💰 Benefit optimization algorithms
+
+- 📈 Spending analytics & visualizations
+
+- 🎯 Personalized recommendations
+
+**Stack:** `Java` `JavaFX` `SQLite` `Analytics`
+
+</td>
+<td width="100%">
+
+#### 📝 [NotoFlow](https://github.com/JalaU-Capstones/NotoFlow)
+
+**Real-Time Task Management**
+
+Notoflow is a task management desktop application built with Java 17+, JavaFX, and Firebase Firestore. It allows users to create categories, lists, and tasks with real-time synchronization, authentication, and secure data access.
+
+**Highlights:**
+
+- ☁️ Firebase Firestore real-time sync
+
+- 🔐 Authentication & security rules
+
+- 📱 Responsive JavaFX interface
+
+**Stack:** `Java` `JavaFX` `Firebase` `Firestore`
+
+</td>
+</tr>
+<tr>
+<td width="100%">
+
+#### 🎓 [UniTutor](https://github.com/JalaU-Capstones/unitutor)
+
+**Academic Tutoring Platform**
+
+¡Bienvenido a UniTutor! Una solución para conectar estudiantes con tutores académicos mediante una aplicación de consola desarrollada en Java y MySQL, siguiendo metodologías ágiles (SCRUM).
+
+**Stack:** `Java` `MySQL` `Console App` `Agile`
+
+</td>
+<td width="33%"></td>
+</tr>
+</table>
+
+### 📦 **Other Projects**
+
+<table>
+<tr>
+<td width="100%">
+
+#### 📦 [Capstone Algorithms](https://github.com/JalaU-Capstones/capstone-algorithms)
+
+**Stack:** `Python` `Shell` `Mako`
+
+</td>
+<td width="100%">
+
+#### 📦 [Gameapi](https://github.com/JalaU-Capstones/gameapi)
+
+**Stack:** `Python` `Makefile` `Dockerfile`
+
+</td>
+</tr>
+<tr>
+<td width="100%">
+
+#### 📦 [Pathfinder Functional Backend](https://github.com/JalaU-Capstones/pathfinder-functional-backend)
+
+This project is an academic capstone for Jala University's "Programming 4" module. The objective is to build a functional Node.js backend implementing a Path Finder application. It supports maps, obstacles, waypoints, route calculations via a pathfinding algorithm, and users.
+
+**Stack:** `JavaScript`
+
+</td>
+<td width="100%">
+
+#### 📦 [Pathfinder Functional Frontend](https://github.com/JalaU-Capstones/pathfinder-functional-frontend)
+
+Web interface for the Pathfinder backend API. Built with Vue 3 and Vite. Provides an interactive visual grid for map exploration, A* pathfinding visualization, and full CRUD management for all backend entities
+
+**Stack:** `Vue` `JavaScript` `CSS` `HTML`
+
+</td>
+</tr>
+<tr>
+<td width="100%">
+
+#### 📦 [Pathfinder Visualizer](https://github.com/JalaU-Capstones/pathfinder-visualizer)
+
+Utility suite to validate API requests, export PostgreSQL data, and visually verify A* algorithm execution on grid maps.
+
+**Stack:** `Python`
+
+</td>
+<td width="100%">
+
+#### 📦 [Usersclimigration](https://github.com/JalaU-Capstones/UsersCliMigration)
+
+This is a basic JAVA companion app (CLI) for Software Development 3, allowing the CRUD of users.
+
+**Stack:** `Java`
+
+</td>
+</tr>
+</table>
 <!-- PROJECTS_END -->
 
 ---
@@ -79,6 +401,24 @@ const capstonePhilosophy = {
 ## 📊 **Project Statistics**
 
 <!-- STATS_START -->
+| Metric | Value |
+|--------|-------|
+| **Total repositories** | 20 |
+| **Total stars** | ⭐ 0 |
+| **Total forks** | 🍴 0 |
+| **Open issues** | 🐛 10 |
+| **Top languages** | Java, C#, JavaScript, Python, Vue |
+| **Last updated** | 2026-09-21 07:44 UTC |
+
+**Projects per category**
+
+| Category | Count |
+|----------|-------|
+| 🏗️ Enterprise / API | 3 |
+| 🔬 Scientific | 2 |
+| 🎮 Game Dev | 6 |
+| 💼 Business Apps | 3 |
+| 📦 Other | 6 |
 <!-- STATS_END -->
 
 ---
