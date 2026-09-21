@@ -308,12 +308,16 @@ Notoflow is a task management desktop application built with Java 17+, JavaFX, a
 
 #### 📦 [Capstone Algorithms](https://github.com/JalaU-Capstones/capstone-algorithms)
 
+A console-based data analysis, search, and classification system focused on student academic performance records.
+
 **Stack:** `Python` `Shell` `Mako`
 
 </td>
 <td width="100%">
 
 #### 📦 [Gameapi](https://github.com/JalaU-Capstones/gameapi)
+
+REST API para gestión de usuarios y partidas de Tic-Tac-Toe.
 
 **Stack:** `Python` `Makefile` `Dockerfile`
 
@@ -408,7 +412,7 @@ This is a basic JAVA companion app (CLI) for Software Development 3, allowing th
 | **Total forks** | 🍴 0 |
 | **Open issues** | 🐛 10 |
 | **Top languages** | Java, C#, JavaScript, Python, Vue |
-| **Last updated** | 2026-09-21 07:44 UTC |
+| **Last updated** | 2026-09-21 07:55 UTC |
 
 **Projects per category**
 
