@@ -319,7 +319,7 @@ A console-based data analysis, search, and classification system focused on stud
 
 REST API para gestión de usuarios y partidas de Tic-Tac-Toe.
 
-**Stack:** `Python` `Makefile` `Dockerfile`
+**Stack:** `Python` `Makefile` `Dockerfile` `Mako`
 
 </td>
 </tr>
@@ -412,7 +412,7 @@ This is a basic JAVA companion app (CLI) for Software Development 3, allowing th
 | **Total forks** | 🍴 0 |
 | **Open issues** | 🐛 11 |
 | **Top languages** | Java, C#, JavaScript, Python, Vue |
-| **Last updated** | 2026-09-25 11:11 UTC |
+| **Last updated** | 2026-09-25 16:34 UTC |
 
 **Projects per category**
 
