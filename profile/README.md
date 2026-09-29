@@ -328,6 +328,8 @@ REST API para gestión de usuarios y partidas de Tic-Tac-Toe.
 
 #### 📦 [Gameclient](https://github.com/JalaU-Capstones/gameclient)
 
+Frontend de SvelteKit para un juego de Tic-Tac-Toe que se integra con el backend FastAPI existente.
+
 **Stack:** `TypeScript` `Svelte` `Makefile` `CSS`
 
 </td>
@@ -422,7 +424,7 @@ This is a basic JAVA companion app (CLI) for Software Development 3, allowing th
 | **Total forks** | 🍴 0 |
 | **Open issues** | 🐛 11 |
 | **Top languages** | Java, C#, JavaScript, Python, Vue |
-| **Last updated** | 2026-09-29 04:19 UTC |
+| **Last updated** | 2026-09-29 12:09 UTC |
 
 **Projects per category**
 
