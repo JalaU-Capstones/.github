@@ -326,6 +326,13 @@ REST API para gestión de usuarios y partidas de Tic-Tac-Toe.
 <tr>
 <td width="100%">
 
+#### 📦 [Gameclient](https://github.com/JalaU-Capstones/gameclient)
+
+**Stack:** `TypeScript` `Svelte` `Makefile` `CSS`
+
+</td>
+<td width="100%">
+
 #### 📦 [Pathfinder Functional Backend](https://github.com/JalaU-Capstones/pathfinder-functional-backend)
 
 This project is an academic capstone for Jala University's "Programming 4" module. The objective is to build a functional Node.js backend implementing a Path Finder application. It supports maps, obstacles, waypoints, route calculations via a pathfinding algorithm, and users.
@@ -333,6 +340,8 @@ This project is an academic capstone for Jala University's "Programming 4" modul
 **Stack:** `JavaScript`
 
 </td>
+</tr>
+<tr>
 <td width="100%">
 
 #### 📦 [Pathfinder Functional Frontend](https://github.com/JalaU-Capstones/pathfinder-functional-frontend)
@@ -342,8 +351,6 @@ Web interface for the Pathfinder backend API. Built with Vue 3 and Vite. Provide
 **Stack:** `Vue` `JavaScript` `CSS` `HTML`
 
 </td>
-</tr>
-<tr>
 <td width="100%">
 
 #### 📦 [Pathfinder Visualizer](https://github.com/JalaU-Capstones/pathfinder-visualizer)
@@ -353,6 +360,8 @@ Utility suite to validate API requests, export PostgreSQL data, and visually ver
 **Stack:** `Python`
 
 </td>
+</tr>
+<tr>
 <td width="100%">
 
 #### 📦 [Usersclimigration](https://github.com/JalaU-Capstones/UsersCliMigration)
@@ -362,6 +371,7 @@ This is a basic JAVA companion app (CLI) for Software Development 3, allowing th
 **Stack:** `Java`
 
 </td>
+<td width="33%"></td>
 </tr>
 </table>
 <!-- PROJECTS_END -->
@@ -407,12 +417,12 @@ This is a basic JAVA companion app (CLI) for Software Development 3, allowing th
 <!-- STATS_START -->
 | Metric | Value |
 |--------|-------|
-| **Total repositories** | 20 |
+| **Total repositories** | 21 |
 | **Total stars** | ⭐ 0 |
 | **Total forks** | 🍴 0 |
 | **Open issues** | 🐛 11 |
 | **Top languages** | Java, C#, JavaScript, Python, Vue |
-| **Last updated** | 2026-09-28 22:56 UTC |
+| **Last updated** | 2026-09-29 04:19 UTC |
 
 **Projects per category**
 
@@ -422,7 +432,7 @@ This is a basic JAVA companion app (CLI) for Software Development 3, allowing th
 | 🔬 Scientific | 2 |
 | 🎮 Game Dev | 6 |
 | 💼 Business Apps | 3 |
-| 📦 Other | 6 |
+| 📦 Other | 7 |
 <!-- STATS_END -->
 
 ---
