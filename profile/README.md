@@ -373,6 +373,15 @@ Utility suite to validate API requests, export PostgreSQL data, and visually ver
 </td>
 <td width="100%">
 
+#### 📦 [Qatu Client](https://github.com/JalaU-Capstones/qatu-client)
+
+**Stack:** `JavaScript` `Makefile` `HTML` `Shell`
+
+</td>
+</tr>
+<tr>
+<td width="100%">
+
 #### 📦 [Usersclimigration](https://github.com/JalaU-Capstones/UsersCliMigration)
 
 This is a basic JAVA companion app (CLI) for Software Development 3, allowing the CRUD of users.
@@ -380,6 +389,7 @@ This is a basic JAVA companion app (CLI) for Software Development 3, allowing th
 **Stack:** `Java`
 
 </td>
+<td width="33%"></td>
 </tr>
 </table>
 <!-- PROJECTS_END -->
@@ -425,12 +435,12 @@ This is a basic JAVA companion app (CLI) for Software Development 3, allowing th
 <!-- STATS_START -->
 | Metric | Value |
 |--------|-------|
-| **Total repositories** | 22 |
+| **Total repositories** | 23 |
 | **Total stars** | ⭐ 0 |
 | **Total forks** | 🍴 0 |
 | **Open issues** | 🐛 11 |
 | **Top languages** | Java, C#, JavaScript, Python, Vue |
-| **Last updated** | 2026-10-06 12:46 UTC |
+| **Last updated** | 2026-10-06 22:21 UTC |
 
 **Projects per category**
 
@@ -440,7 +450,7 @@ This is a basic JAVA companion app (CLI) for Software Development 3, allowing th
 | 🔬 Scientific | 2 |
 | 🎮 Game Dev | 6 |
 | 💼 Business Apps | 3 |
-| 📦 Other | 8 |
+| 📦 Other | 9 |
 <!-- STATS_END -->
 
 ---
