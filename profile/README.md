@@ -375,7 +375,7 @@ Utility suite to validate API requests, export PostgreSQL data, and visually ver
 
 #### 📦 [Qatu Client](https://github.com/JalaU-Capstones/qatu-client)
 
-**Stack:** `JavaScript` `Makefile` `HTML` `Shell`
+**Stack:** `JavaScript` `Makefile` `CSS` `HTML`
 
 </td>
 </tr>
@@ -440,7 +440,7 @@ This is a basic JAVA companion app (CLI) for Software Development 3, allowing th
 | **Total forks** | 🍴 0 |
 | **Open issues** | 🐛 11 |
 | **Top languages** | Java, C#, JavaScript, Python, TypeScript |
-| **Last updated** | 2026-10-08 22:55 UTC |
+| **Last updated** | 2026-10-09 04:38 UTC |
 
 **Projects per category**
 
