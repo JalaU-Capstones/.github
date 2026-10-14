@@ -438,9 +438,9 @@ This is a basic JAVA companion app (CLI) for Software Development 3, allowing th
 | **Total repositories** | 23 |
 | **Total stars** | ⭐ 0 |
 | **Total forks** | 🍴 0 |
-| **Open issues** | 🐛 13 |
-| **Top languages** | Java, C#, JavaScript, Python, TypeScript |
-| **Last updated** | 2026-10-14 03:36 UTC |
+| **Open issues** | 🐛 12 |
+| **Top languages** | Java, C#, Python, JavaScript, TypeScript |
+| **Last updated** | 2026-10-14 11:13 UTC |
 
 **Projects per category**
 
