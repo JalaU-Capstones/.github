@@ -368,12 +368,16 @@ Utility suite to validate API requests, export PostgreSQL data, and visually ver
 
 #### 📦 [Qatu Api](https://github.com/JalaU-Capstones/qatu-api)
 
+Qatu (Quechua word for "store") is an online digital marketplace where sellers can offer products to buyers.
+
 **Stack:** `JavaScript` `Makefile`
 
 </td>
 <td width="100%">
 
 #### 📦 [Qatu Client](https://github.com/JalaU-Capstones/qatu-client)
+
+Frontend client for the Qatu Marketplace, a digital marketplace for buyers and sellers. Built as the capstone project for Jala University SD4.
 
 **Stack:** `JavaScript` `Makefile` `CSS` `HTML`
 
@@ -438,9 +442,9 @@ This is a basic JAVA companion app (CLI) for Software Development 3, allowing th
 | **Total repositories** | 23 |
 | **Total stars** | ⭐ 0 |
 | **Total forks** | 🍴 0 |
-| **Open issues** | 🐛 11 |
+| **Open issues** | 🐛 5 |
 | **Top languages** | Java, C#, Python, JavaScript, TypeScript |
-| **Last updated** | 2026-10-14 21:17 UTC |
+| **Last updated** | 2026-10-15 03:16 UTC |
 
 **Projects per category**
 
