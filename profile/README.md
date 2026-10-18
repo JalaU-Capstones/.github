@@ -330,7 +330,7 @@ REST API para gestión de usuarios y partidas de Tic-Tac-Toe.
 
 Frontend de SvelteKit para un juego de Tic-Tac-Toe que se integra con el backend FastAPI existente.
 
-**Stack:** `TypeScript` `Svelte` `Makefile` `CSS`
+**Stack:** `TypeScript` `Svelte` `Makefile` `JavaScript`
 
 </td>
 <td width="100%">
@@ -444,7 +444,7 @@ This is a basic JAVA companion app (CLI) for Software Development 3, allowing th
 | **Total forks** | 🍴 0 |
 | **Open issues** | 🐛 5 |
 | **Top languages** | Java, C#, Python, JavaScript, TypeScript |
-| **Last updated** | 2026-10-18 03:05 UTC |
+| **Last updated** | 2026-10-18 10:25 UTC |
 
 **Projects per category**
 
