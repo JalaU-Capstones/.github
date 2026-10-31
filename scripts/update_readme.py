@@ -213,6 +213,26 @@ def fetch_org_repos(session: requests.Session, org: str) -> list[dict[str, Any]]
     return filtered
 
 
+def normalize_languages(raw: Any) -> dict[str, int]:
+    """Normalize GitHub language payloads to dict[str, int]."""
+    if not isinstance(raw, dict):
+        return {}
+
+    out: dict[str, int] = {}
+    for key, value in raw.items():
+        if isinstance(value, int) and not isinstance(value, bool):
+            out[str(key)] = value
+            continue
+
+        if isinstance(value, dict):
+            for nested_key in ("bytes", "count", "value"):
+                nested_value = value.get(nested_key)
+                if isinstance(nested_value, int) and not isinstance(nested_value, bool):
+                    out[str(key)] = nested_value
+                    break
+    return out
+
+
 def fetch_repo_languages(session: requests.Session, org: str, repo_name: str) -> dict[str, int]:
     """Return the language byte totals for one repository."""
     url = f"{API_BASE}/repos/{org}/{repo_name}/languages"
@@ -223,7 +243,7 @@ def fetch_repo_languages(session: requests.Session, org: str, repo_name: str) ->
     payload = handle_api_response(resp, f"GET /repos/{org}/{repo_name}/languages")
     if not payload:
         return {}
-    return {str(key): int(value) for key, value in payload.items()}
+    return normalize_languages(payload)
 
 
 def parse_iso8601(raw: str | None) -> datetime | None:
@@ -298,15 +318,16 @@ def render_repo_stats(repo: dict[str, Any]) -> str:
 
 def top_languages(languages: dict[str, int], limit: int = 4) -> list[str]:
     """Return top language names, sorted by bytes descending."""
-    if not languages:
+    normalized = normalize_languages(languages)
+    if not normalized:
         return []
-    ordered = sorted(languages.items(), key=lambda item: (-int(item[1]), str(item[0]).lower()))
+    ordered = sorted(normalized.items(), key=lambda item: (-int(item[1]), str(item[0]).lower()))
     return [language for language, _ in ordered[:limit]]
 
 
 def primary_language(repo: dict[str, Any]) -> str | None:
     """Return the primary language by byte count."""
-    languages = repo.get("languages") or {}
+    languages = normalize_languages(repo.get("languages"))
     if not languages:
         return None
     return max(languages.items(), key=lambda item: int(item[1]))[0]
@@ -321,7 +342,7 @@ def build_card_cell(repo: dict[str, Any]) -> str:
     homepage = (repo.get("homepage") or "").strip()
     license_info = repo.get("license") or {}
     license_url = license_info.get("url") if isinstance(license_info, dict) else None
-    languages = repo.get("languages") or {}
+    languages = normalize_languages(repo.get("languages"))
     stack = top_languages(languages, limit=4)
 
     parts: list[str] = [f"#### [{pretty_name}]({html_url})"]
@@ -355,7 +376,7 @@ def aggregate_language_totals(repos: list[dict[str, Any]]) -> dict[str, int]:
     """Aggregate language byte totals across the organization."""
     totals: dict[str, int] = defaultdict(int)
     for repo in repos:
-        for language, value in (repo.get("languages") or {}).items():
+        for language, value in normalize_languages(repo.get("languages")).items():
             totals[str(language)] += int(value)
     return dict(totals)
 
@@ -370,7 +391,7 @@ def build_top_languages_table(repos: list[dict[str, Any]]) -> str:
     rows = []
     for language, byte_count in sorted(totals.items(), key=lambda item: (-item[1], item[0].lower()))[:10]:
         share = (byte_count / total_bytes) * 100
-        repo_count = sum(1 for repo in repos if language in (repo.get("languages") or {}))
+        repo_count = sum(1 for repo in repos if language in normalize_languages(repo.get("languages")))
         rows.append(f"| {language} | {share:.0f}% | {repo_count} |")
 
     return "| Language | Share | Repos |\n|----------|-------|-------|\n" + "\n".join(rows)
@@ -556,16 +577,19 @@ def get_repo_stats(session: requests.Session, org: str, repo: dict[str, Any]) ->
         if resp.status_code == 202:
             logger.warning("Stats for %s/%s are being computed, skipping this run.", org, repo_name)
             skipped_202 += 1
+            repo["_stats_status"] = "pending"
             return None
 
         if resp.status_code in (401, 403, 404):
             logger.warning("Stats unavailable for %s/%s (%s): HTTP %s", org, repo_name, kind, resp.status_code)
             failed += 1
+            repo["_stats_status"] = "failed"
             continue
 
         if resp.status_code >= 400:
             logger.warning("Stats request failed for %s/%s (%s): HTTP %s", org, repo_name, kind, resp.status_code)
             failed += 1
+            repo["_stats_status"] = "failed"
             continue
 
         try:
@@ -573,20 +597,24 @@ def get_repo_stats(session: requests.Session, org: str, repo: dict[str, Any]) ->
         except ValueError:
             logger.warning("No JSON payload returned for %s/%s stats/%s", org, repo_name, kind)
             failed += 1
+            repo["_stats_status"] = "failed"
             continue
 
         if not payload:
             logger.warning("Empty stats payload for %s/%s stats/%s", org, repo_name, kind)
             failed += 1
+            repo["_stats_status"] = "failed"
             continue
 
         stats[kind] = payload
 
     if not stats or len(stats) == 1:
         logger.info("Stats summary: 0 ok, %s skipped (202), %s failed", skipped_202, failed)
+        repo["_stats_status"] = "skipped" if skipped_202 == 0 else "pending"
         return None
 
     logger.info("Stats summary: 1 ok, %s skipped (202), %s failed", skipped_202, failed)
+    repo["_stats_status"] = "ok"
     return stats
 
 
@@ -605,7 +633,7 @@ def build_projects_section(repos: list[dict[str, Any]]) -> str:
     ordered_names = sorted(
         groups.keys(),
         key=lambda name: (
-            -sum(int(repo.get("languages") or {}).get(name, 0) for repo in groups[name]),
+            -sum(normalize_languages(repo.get("languages")).get(name, 0) for repo in groups[name]),
             name.lower(),
         ) if name != "Uncategorized" else (0, "zzzzzz"),
     )
@@ -738,6 +766,11 @@ def generate_stats_section(repos: list[dict[str, Any]], repo_stats: list[dict[st
     lines.extend(["### Repository freshness", build_freshness_table(repos), ""])
 
     charts = generate_stats_charts(repo_stats)
+    if not charts:
+        lines.append(
+            "_Commit activity charts will appear once GitHub finishes computing stats for this organization. The next scheduled run will include them._"
+        )
+        return "\n".join(lines)
 
     if "commit_activity" in charts:
         lines.append("### Weekly commit activity")
@@ -818,8 +851,23 @@ def update_readme_file(readme_path: str, projects_md: str, stats_md: str) -> boo
     return True
 
 
+def _self_test() -> int:
+    """Run a small regression check for the language normalizer."""
+    bad = {"Python": {"bytes": 100, "count": 2}, "Java": 50, "Weird": "x"}
+    expected = {"Python": 100, "Java": 50}
+    actual = normalize_languages(bad)
+    if actual != expected:
+        logger.error("Self-test failed: normalize_languages(%s) returned %s, expected %s", bad, actual, expected)
+        return 1
+    logger.info("Self-test passed: normalize_languages() returned %s", actual)
+    return 0
+
+
 def main() -> int:
     """Run the README generation workflow."""
+    if len(sys.argv) > 1 and sys.argv[1] == "--self-test":
+        return _self_test()
+
     org = os.getenv("ORG", DEFAULT_ORG)
     readme_path = os.getenv("README_PATH", DEFAULT_README_PATH)
     token = os.getenv("GH_TOKEN") or os.getenv("ORG_READ_TOKEN")
@@ -835,19 +883,32 @@ def main() -> int:
         repos = fetch_org_repos(session, org)
 
         for repo in repos:
-            repo["languages"] = fetch_repo_languages(session, org, repo["name"])
+            repo["languages"] = normalize_languages(fetch_repo_languages(session, org, repo["name"]))
             repo["primary_language"] = primary_language(repo)
 
         repo_stats: list[dict[str, Any]] = []
+        pending = 0
+        failed = 0
+        skipped = 0
         for repo in repos:
+            repo["_stats_status"] = "skipped"
             stats = get_repo_stats(session, org, repo)
             if stats is not None:
                 repo_stats.append(stats)
+                repo["_stats_status"] = "ok"
+                continue
+            status = repo.get("_stats_status") or "skipped"
+            if status == "pending":
+                pending += 1
+            elif status == "failed":
+                failed += 1
+            else:
+                skipped += 1
 
         projects_md = build_projects_section(repos)
         stats_md = generate_stats_section(repos, repo_stats)
         update_readme_file(readme_path, projects_md, stats_md)
-        logger.info("Stats summary: %s ok, %s skipped (202), %s failed", len(repo_stats), 0, 0)
+        logger.info("Stats summary: %s ok, %s pending (202), %s failed, %s skipped.", len(repo_stats), pending, failed, skipped)
         return 0
     except GitHubApiError as exc:
         logger.error(str(exc))
@@ -861,4 +922,6 @@ def main() -> int:
 
 
 if __name__ == "__main__":
+    if len(sys.argv) > 1 and sys.argv[1] == "--self-test":
+        raise SystemExit(_self_test())
     raise SystemExit(main())
