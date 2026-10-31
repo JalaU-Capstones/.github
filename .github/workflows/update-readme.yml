@@ -1,39 +1,10 @@
-# ---------------------------------------------------------------------------
-# JalaU-Capstones Organization README Updater
-# ---------------------------------------------------------------------------
-# Regenerates the dynamic sections of profile/README.md (Featured Projects
-# and Project Statistics) by querying the GitHub REST API.
-#
-# Triggers:
-#   - schedule:           Every 6 hours at minute 0 (UTC).
-#   - workflow_dispatch:  Manual run from the Actions tab.
-#   - push:               Changes to the README, the script, or this workflow.
-#
-# Required secrets:
-#   ORG_READ_TOKEN   Fine-grained PAT with "Metadata: Read" + "Contents: Read"
-#                    on all JalaU-Capstones repositories. Used ONLY to read.
-#
-# The default GITHUB_TOKEN is used for the push-back to the repository, so
-# no extra write scopes are needed on the PAT.
-# ---------------------------------------------------------------------------
-
 name: Update Organization README
 
 on:
   schedule:
-    # Minute 0 of hours 0, 6, 12 and 18 UTC (every 6 hours)
-    - cron: '0 */6 * * *'
+    - cron: '0 3 * * 1'
 
   workflow_dispatch:
-    inputs:
-      force:
-        description: 'Force regeneration even if no changes are detected'
-        required: false
-        default: 'false'
-        type: choice
-        options:
-          - 'false'
-          - 'true'
 
   push:
     branches:
@@ -44,12 +15,10 @@ on:
       - 'requirements.txt'
       - '.github/workflows/update-readme.yml'
 
-# Only one concurrent run at a time; cancel pending runs of the same ref
 concurrency:
   group: update-readme-${{ github.ref }}
   cancel-in-progress: true
 
-# Principle of least privilege: only the push step needs write access
 permissions:
   contents: write
 
@@ -58,20 +27,21 @@ jobs:
     name: Regenerate profile/README.md
     runs-on: ubuntu-latest
     timeout-minutes: 10
+    env:
+      ORG: JalaU-Capstones
+      README_PATH: profile/README.md
 
     steps:
-      # -----------------------------------------------------------------
-      # 1. Checkout the .github repository
-      # -----------------------------------------------------------------
+      - name: Start timer
+        id: timer
+        run: echo "start_epoch=$(date -u +%s)" >> "$GITHUB_OUTPUT"
+
       - name: Checkout repository
         uses: actions/checkout@v4
         with:
           fetch-depth: 1
           token: ${{ secrets.GITHUB_TOKEN }}
 
-      # -----------------------------------------------------------------
-      # 2. Set up Python 3.12 with pip cache
-      # -----------------------------------------------------------------
       - name: Set up Python
         uses: actions/setup-python@v5
         with:
@@ -79,61 +49,143 @@ jobs:
           cache: 'pip'
           cache-dependency-path: requirements.txt
 
-      # -----------------------------------------------------------------
-      # 3. Install dependencies
-      # -----------------------------------------------------------------
       - name: Install dependencies
         run: |
           python -m pip install --upgrade pip
           pip install -r requirements.txt
 
-      # -----------------------------------------------------------------
-      # 4. Run the updater script
-      # -----------------------------------------------------------------
+      - name: Validate ORG_READ_TOKEN
+        env:
+          GH_TOKEN: ${{ secrets.ORG_READ_TOKEN }}
+        run: |
+          python - <<'PY'
+          import os
+          import sys
+          import requests
+
+          token = os.environ.get('GH_TOKEN')
+          if not token:
+              print('ERROR: Missing GH_TOKEN / ORG_READ_TOKEN. Define the fine-grained PAT secret before running this workflow.', file=sys.stderr)
+              raise SystemExit(1)
+
+          try:
+              resp = requests.get(
+                  'https://api.github.com/user',
+                  headers={
+                      'Authorization': f'Bearer {token}',
+                      'Accept': 'application/vnd.github+json',
+                      'User-Agent': 'JalaU-Capstones-README-Updater',
+                      'X-GitHub-Api-Version': '2022-11-28',
+                  },
+                  timeout=30,
+              )
+          except requests.RequestException as exc:
+              print(f'ERROR: Unable to validate GH_TOKEN: {exc}', file=sys.stderr)
+              raise SystemExit(1)
+
+          if resp.status_code in (401, 403):
+              print('ERROR: GitHub rejected the token. Verify ORG_READ_TOKEN is valid, not expired, and has Metadata: Read-only and Contents: Read-only for JalaU-Capstones.', file=sys.stderr)
+              raise SystemExit(1)
+
+          if resp.status_code >= 400:
+              print(f'ERROR: Token validation failed with HTTP {resp.status_code}: {resp.text[:200]}', file=sys.stderr)
+              raise SystemExit(1)
+
+          payload = resp.json()
+          print(f'Validated token for login: {payload.get("login", "unknown")}')
+          PY
+
+      - name: Validate stats access
+        env:
+          GH_TOKEN: ${{ secrets.ORG_READ_TOKEN }}
+        run: |
+          python - <<'PY'
+          import os
+          import sys
+          import requests
+
+          token = os.environ.get('GH_TOKEN')
+          session = requests.Session()
+          session.headers.update({
+              'Authorization': f'Bearer {token}',
+              'Accept': 'application/vnd.github+json',
+              'User-Agent': 'JalaU-Capstones-README-Updater',
+              'X-GitHub-Api-Version': '2022-11-28',
+          })
+
+          resp = session.get('https://api.github.com/orgs/JalaU-Capstones/repos', params={'type': 'public', 'per_page': 100}, timeout=30)
+          if resp.status_code in (401, 403):
+              print('ERROR: The PAT cannot read organization repositories. Verify ORG_READ_TOKEN permissions and validity.', file=sys.stderr)
+              raise SystemExit(1)
+          if resp.status_code >= 400:
+              print(f'ERROR: Repo listing failed with HTTP {resp.status_code}: {resp.text[:200]}', file=sys.stderr)
+              raise SystemExit(1)
+
+          repos = resp.json()
+          repo = next((entry for entry in repos if entry.get('name') not in ('.github',) and not entry.get('fork')), None)
+          if repo is None:
+              print('ERROR: No organization repositories were found to validate stats access.', file=sys.stderr)
+              raise SystemExit(1)
+
+          stats_resp = session.get(f"https://api.github.com/repos/JalaU-Capstones/{repo['name']}/stats/commit_activity", timeout=30)
+          if stats_resp.status_code in (401, 403):
+              print('ERROR: The PAT cannot read stats endpoints. Verify ORG_READ_TOKEN includes Metadata: Read-only and Contents: Read-only.', file=sys.stderr)
+              raise SystemExit(1)
+          if stats_resp.status_code == 202:
+              print(f"Validated stats endpoint for {repo['name']}; GitHub is still computing commit activity.")
+          elif stats_resp.status_code >= 400:
+              print(f'ERROR: Stats validation failed for {repo["name"]}: HTTP {stats_resp.status_code}', file=sys.stderr)
+              raise SystemExit(1)
+          else:
+              print(f'Validated stats endpoint for {repo["name"]}.')
+          PY
+
       - name: Run README updater
         env:
           GH_TOKEN: ${{ secrets.ORG_READ_TOKEN }}
           ORG: JalaU-Capstones
           README_PATH: profile/README.md
         run: |
-          echo "::group::Running update_readme.py"
-          python scripts/update_readme.py
-          echo "::endgroup::"
+          python scripts/update_readme.py 2>&1 | tee /tmp/readme_update.log
 
-      # -----------------------------------------------------------------
-      # 5. Commit and push ONLY if the README changed
-      # -----------------------------------------------------------------
       - name: Detect changes
         id: changes
         run: |
           if git diff --quiet -- profile/README.md; then
             echo "changed=false" >> "$GITHUB_OUTPUT"
-            echo "No changes detected in profile/README.md."
           else
             echo "changed=true" >> "$GITHUB_OUTPUT"
-            echo "Changes detected — will commit."
           fi
 
       - name: Commit and push
         if: steps.changes.outputs.changed == 'true'
         run: |
-          git config user.name  "github-actions[bot]"
+          git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git add profile/README.md
           git commit -m "chore(readme): auto-update organization README [skip ci]"
           git push
 
-      # -----------------------------------------------------------------
-      # 6. Summary in the Actions UI
-      # -----------------------------------------------------------------
       - name: Job summary
         if: always()
         run: |
+          chart_count=$(python - <<'PY'
+          import re
+          from pathlib import Path
+          text = Path('profile/README.md').read_text(encoding='utf-8')
+          print(len(re.findall(r'quickchart\.io/chart\?c=', text)))
+          PY
+          )
+
+          skipped_count=$(grep -c 'are being computed' /tmp/readme_update.log 2>/dev/null || true)
+
           {
-            echo "### README Updater Summary"
-            echo ""
-            echo "- **Organization:** \`${{ env.ORG || 'JalaU-Capstones' }}\`"
-            echo "- **README path:** \`profile/README.md\`"
-            echo "- **Changes detected:** \`${{ steps.changes.outputs.changed || 'unknown' }}\`"
-            echo "- **Triggered by:** \`${{ github.event_name }}\`"
+            echo '### README updater summary'
+            echo ''
+            echo "- Organization: \`${ORG}\`"
+            echo '- README path: `profile/README.md`'
+            echo "- Changes detected: \`${{ steps.changes.outputs.changed || 'unknown' }}\`"
+            echo "- Triggered by: \`${{ github.event_name }}\`"
+            echo "- Charts rendered: \`${chart_count}\`"
+            echo "- Stats skipped (202): \`${skipped_count}\`"
           } >> "$GITHUB_STEP_SUMMARY"
