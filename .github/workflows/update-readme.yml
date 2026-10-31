@@ -95,7 +95,7 @@ jobs:
           print(f'Validated token for login: {payload.get("login", "unknown")}')
           PY
 
-      - name: Validate stats access
+      - name: Verify languages payload shape
         env:
           GH_TOKEN: ${{ secrets.ORG_READ_TOKEN }}
         run: |
@@ -105,6 +105,10 @@ jobs:
           import requests
 
           token = os.environ.get('GH_TOKEN')
+          if not token:
+              print('ERROR: Missing GH_TOKEN / ORG_READ_TOKEN.', file=sys.stderr)
+              raise SystemExit(1)
+
           session = requests.Session()
           session.headers.update({
               'Authorization': f'Bearer {token}',
@@ -114,9 +118,6 @@ jobs:
           })
 
           resp = session.get('https://api.github.com/orgs/JalaU-Capstones/repos', params={'type': 'public', 'per_page': 100}, timeout=30)
-          if resp.status_code in (401, 403):
-              print('ERROR: The PAT cannot read organization repositories. Verify ORG_READ_TOKEN permissions and validity.', file=sys.stderr)
-              raise SystemExit(1)
           if resp.status_code >= 400:
               print(f'ERROR: Repo listing failed with HTTP {resp.status_code}: {resp.text[:200]}', file=sys.stderr)
               raise SystemExit(1)
@@ -124,21 +125,30 @@ jobs:
           repos = resp.json()
           repo = next((entry for entry in repos if entry.get('name') not in ('.github',) and not entry.get('fork')), None)
           if repo is None:
-              print('ERROR: No organization repositories were found to validate stats access.', file=sys.stderr)
+              print('ERROR: No organization repositories were found to validate language payload shape.', file=sys.stderr)
               raise SystemExit(1)
 
-          stats_resp = session.get(f"https://api.github.com/repos/JalaU-Capstones/{repo['name']}/stats/commit_activity", timeout=30)
-          if stats_resp.status_code in (401, 403):
-              print('ERROR: The PAT cannot read stats endpoints. Verify ORG_READ_TOKEN includes Metadata: Read-only and Contents: Read-only.', file=sys.stderr)
+          lang_resp = session.get(f"https://api.github.com/repos/JalaU-Capstones/{repo['name']}/languages", timeout=30)
+          if lang_resp.status_code >= 400:
+              print(f'ERROR: Language validation failed for {repo["name"]}: HTTP {lang_resp.status_code}', file=sys.stderr)
               raise SystemExit(1)
-          if stats_resp.status_code == 202:
-              print(f"Validated stats endpoint for {repo['name']}; GitHub is still computing commit activity.")
-          elif stats_resp.status_code >= 400:
-              print(f'ERROR: Stats validation failed for {repo["name"]}: HTTP {stats_resp.status_code}', file=sys.stderr)
+
+          payload = lang_resp.json()
+          if not isinstance(payload, dict):
+              print(f'ERROR: Unexpected languages payload type for {repo["name"]}: {type(payload).__name__}; expected dict[str, int].', file=sys.stderr)
               raise SystemExit(1)
-          else:
-              print(f'Validated stats endpoint for {repo["name"]}.')
+
+          for name, value in payload.items():
+              if not isinstance(value, int) or isinstance(value, bool):
+                  print(f'ERROR: Unexpected language payload shape for {repo["name"]}: {name}={value!r} ({type(value).__name__}); expected int.', file=sys.stderr)
+                  raise SystemExit(1)
+
+          print(f'Validated language payload for {repo["name"]}: {len(payload)} entries.')
           PY
+
+      - name: Self-test updater
+        run: |
+          python scripts/update_readme.py --self-test
 
       - name: Run README updater
         env:
@@ -146,10 +156,36 @@ jobs:
           ORG: JalaU-Capstones
           README_PATH: profile/README.md
         run: |
+          set -o pipefail
           python scripts/update_readme.py 2>&1 | tee /tmp/readme_update.log
+
+      - name: Check README was updated
+        if: success()
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+
+          readme = Path('profile/README.md').read_text(encoding='utf-8')
+          markers = (
+              ('projects', '<!-- PROJECTS_START -->', '<!-- PROJECTS_END -->'),
+              ('stats', '<!-- STATS_START -->', '<!-- STATS_END -->'),
+          )
+
+          for label, start_marker, end_marker in markers:
+              start_index = readme.find(start_marker)
+              end_index = readme.find(end_marker, start_index if start_index != -1 else 0)
+              if start_index == -1 or end_index == -1:
+                  raise SystemExit(f'ERROR: README marker pair missing for {label}.')
+              body = readme[start_index + len(start_marker):end_index].strip()
+              if not body:
+                  raise SystemExit(f'ERROR: README marker block for {label} is empty after the updater run.')
+
+          print('README markers are populated.')
+          PY
 
       - name: Detect changes
         id: changes
+        if: success()
         run: |
           if git diff --quiet -- profile/README.md; then
             echo "changed=false" >> "$GITHUB_OUTPUT"
@@ -158,7 +194,7 @@ jobs:
           fi
 
       - name: Commit and push
-        if: steps.changes.outputs.changed == 'true'
+        if: success() && steps.changes.outputs.changed == 'true'
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
@@ -169,23 +205,29 @@ jobs:
       - name: Job summary
         if: always()
         run: |
-          chart_count=$(python - <<'PY'
+          status="${{ job.status }}"
+          repo_count=$(python - <<'PY'
           import re
           from pathlib import Path
           text = Path('profile/README.md').read_text(encoding='utf-8')
-          print(len(re.findall(r'quickchart\.io/chart\?c=', text)))
+          print(len(re.findall(r'^#### \[', text, flags=re.MULTILINE)))
+          PY
+          )
+          category_count=$(python - <<'PY'
+          import re
+          from pathlib import Path
+          text = Path('profile/README.md').read_text(encoding='utf-8')
+          print(len(re.findall(r'^### ', text, flags=re.MULTILINE)))
           PY
           )
 
-          skipped_count=$(grep -c 'are being computed' /tmp/readme_update.log 2>/dev/null || true)
-
           {
-            echo '### README updater summary'
+            echo '### README Updater Summary'
             echo ''
-            echo "- Organization: \`${ORG}\`"
-            echo '- README path: `profile/README.md`'
-            echo "- Changes detected: \`${{ steps.changes.outputs.changed || 'unknown' }}\`"
-            echo "- Triggered by: \`${{ github.event_name }}\`"
-            echo "- Charts rendered: \`${chart_count}\`"
-            echo "- Stats skipped (202): \`${skipped_count}\`"
+            echo "- **Status:** ${status}"
+            echo "- **Organization:** \`${ORG}\`"
+            echo '- **README path:** `profile/README.md`'
+            echo "- **Triggered by:** \`${{ github.event_name }}\`"
+            echo "- **Repositories:** \`${repo_count:-unknown}\`"
+            echo "- **Categories:** \`${category_count:-unknown}\`"
           } >> "$GITHUB_STEP_SUMMARY"
