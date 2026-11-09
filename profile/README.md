@@ -222,7 +222,7 @@ REST API para gestión de usuarios y partidas de Tic-Tac-Toe.
 
 Issues: 1
 
-Updated: 2026-10-26
+Updated: 2026-11-02
 
 </td>
 <td width="50%">
@@ -323,7 +323,7 @@ Frontend client for the Qatu Marketplace, a digital marketplace for buyers and s
 
 Issues: 1
 
-Updated: 2026-11-01
+Updated: 2026-11-09
 
 </td>
 <td width="50%">
@@ -338,7 +338,7 @@ Qatu (Quechua word for "store") is an online digital marketplace where sellers c
 
 Issues: 5
 
-Updated: 2026-11-02
+Updated: 2026-11-09
 
 </td>
 </tr>
@@ -490,7 +490,7 @@ Updated: 2026-09-05
 | Total commits | 0 |
 | Total contributors | 0 |
 | Total languages | 14 |
-| Last updated | 2026-11-02 09:36 UTC |
+| Last updated | 2026-11-09 09:32 UTC |
 
 ### Top languages
 | Language | Share | Repos |
