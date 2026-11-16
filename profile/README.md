@@ -38,6 +38,93 @@ const capstonePhilosophy = {
 ##  **Featured Projects**
 
 <!-- PROJECTS_START -->
+### JavaScript Projects
+
+<table>
+<tr>
+<td width="50%">
+
+#### [Qatu Client](https://github.com/JalaU-Capstones/qatu-client)
+
+Frontend client for the Qatu Marketplace, a digital marketplace for buyers and sellers. Built as the capstone project for Jala University SD4.
+
+**Stack:** `JavaScript` `CSS` `Makefile` `Shell`
+
+[Repository](https://github.com/JalaU-Capstones/qatu-client)
+
+Issues: 6
+
+Updated: 2026-11-16
+
+</td>
+<td width="50%">
+
+#### [Qatu Api](https://github.com/JalaU-Capstones/qatu-api)
+
+Qatu (Quechua word for "store") is an online digital marketplace where sellers can offer products to buyers.
+
+**Stack:** `JavaScript` `PLpgSQL` `Makefile` `Dockerfile`
+
+[Repository](https://github.com/JalaU-Capstones/qatu-api) · [License](https://api.github.com/licenses/mit)
+
+Issues: 7
+
+Updated: 2026-11-16
+
+</td>
+</tr>
+<tr>
+<td width="50%">
+
+#### [Pathfinder Functional Backend](https://github.com/JalaU-Capstones/pathfinder-functional-backend)
+
+This project is an academic capstone for Jala University's "Programming 4" module. The objective is to build a functional Node.js backend implementing a Path Finder application. It supports maps, obstacles, waypoints...
+
+**Stack:** `JavaScript`
+
+[Repository](https://github.com/JalaU-Capstones/pathfinder-functional-backend) · [License](https://api.github.com/licenses/mit)
+
+Stars: 0
+
+Updated: 2026-09-05
+
+</td>
+<td width="50%">
+
+#### [Math Solver Chatbot](https://github.com/JalaU-Capstones/math-solver-chatbot)
+
+AI-powered math problem solver with step-by-step solutions. Perfect for students and educators.
+
+**Stack:** `JavaScript` `CSS` `HTML`
+
+[Repository](https://github.com/JalaU-Capstones/math-solver-chatbot) · [License](https://api.github.com/licenses/mit)
+
+Stars: 0
+
+Updated: 2025-12-11
+
+</td>
+</tr>
+<tr>
+<td width="50%">
+
+#### [Snake Lineal](https://github.com/JalaU-Capstones/snake-lineal)
+
+Snake Lineal is an educational web-based implementation of the classic Snake game enhanced with linear algebra concepts. This project demonstrates practical applications of vectors, transformations, and collision...
+
+**Stack:** `JavaScript` `CSS` `HTML`
+
+[Repository](https://github.com/JalaU-Capstones/snake-lineal) · [License](https://api.github.com/licenses/mit)
+
+Stars: 0
+
+Updated: 2025-09-23
+
+</td>
+<td width="50%"></td>
+</tr>
+</table>
+
 ### Java Projects
 
 <table>
@@ -222,7 +309,7 @@ REST API para gestión de usuarios y partidas de Tic-Tac-Toe.
 
 Issues: 1
 
-Updated: 2026-11-02
+Updated: 2026-11-09
 
 </td>
 <td width="50%">
@@ -304,93 +391,6 @@ Stars: 0
 Updated: 2025-09-23
 
 </td>
-</tr>
-</table>
-
-### JavaScript Projects
-
-<table>
-<tr>
-<td width="50%">
-
-#### [Qatu Client](https://github.com/JalaU-Capstones/qatu-client)
-
-Frontend client for the Qatu Marketplace, a digital marketplace for buyers and sellers. Built as the capstone project for Jala University SD4.
-
-**Stack:** `JavaScript` `Makefile` `CSS` `HTML`
-
-[Repository](https://github.com/JalaU-Capstones/qatu-client)
-
-Issues: 1
-
-Updated: 2026-11-09
-
-</td>
-<td width="50%">
-
-#### [Qatu Api](https://github.com/JalaU-Capstones/qatu-api)
-
-Qatu (Quechua word for "store") is an online digital marketplace where sellers can offer products to buyers.
-
-**Stack:** `JavaScript` `Makefile`
-
-[Repository](https://github.com/JalaU-Capstones/qatu-api) · [License](https://api.github.com/licenses/mit)
-
-Issues: 5
-
-Updated: 2026-11-09
-
-</td>
-</tr>
-<tr>
-<td width="50%">
-
-#### [Pathfinder Functional Backend](https://github.com/JalaU-Capstones/pathfinder-functional-backend)
-
-This project is an academic capstone for Jala University's "Programming 4" module. The objective is to build a functional Node.js backend implementing a Path Finder application. It supports maps, obstacles, waypoints...
-
-**Stack:** `JavaScript`
-
-[Repository](https://github.com/JalaU-Capstones/pathfinder-functional-backend) · [License](https://api.github.com/licenses/mit)
-
-Stars: 0
-
-Updated: 2026-09-05
-
-</td>
-<td width="50%">
-
-#### [Math Solver Chatbot](https://github.com/JalaU-Capstones/math-solver-chatbot)
-
-AI-powered math problem solver with step-by-step solutions. Perfect for students and educators.
-
-**Stack:** `JavaScript` `CSS` `HTML`
-
-[Repository](https://github.com/JalaU-Capstones/math-solver-chatbot) · [License](https://api.github.com/licenses/mit)
-
-Stars: 0
-
-Updated: 2025-12-11
-
-</td>
-</tr>
-<tr>
-<td width="50%">
-
-#### [Snake Lineal](https://github.com/JalaU-Capstones/snake-lineal)
-
-Snake Lineal is an educational web-based implementation of the classic Snake game enhanced with linear algebra concepts. This project demonstrates practical applications of vectors, transformations, and collision...
-
-**Stack:** `JavaScript` `CSS` `HTML`
-
-[Repository](https://github.com/JalaU-Capstones/snake-lineal) · [License](https://api.github.com/licenses/mit)
-
-Stars: 0
-
-Updated: 2025-09-23
-
-</td>
-<td width="50%"></td>
 </tr>
 </table>
 
@@ -486,37 +486,37 @@ Updated: 2026-09-05
 | Total repositories | 23 |
 | Total stars | 0 |
 | Total forks | 0 |
-| Open issues | 12 |
+| Open issues | 19 |
 | Total commits | 0 |
 | Total contributors | 0 |
-| Total languages | 14 |
-| Last updated | 2026-11-09 09:32 UTC |
+| Total languages | 15 |
+| Last updated | 2026-11-16 09:30 UTC |
 
 ### Top languages
 | Language | Share | Repos |
 |----------|-------|-------|
-| Java | 24% | 8 |
-| C# | 20% | 2 |
-| Python | 20% | 7 |
-| JavaScript | 17% | 7 |
-| TypeScript | 9% | 1 |
-| Vue | 4% | 1 |
-| Svelte | 4% | 1 |
-| CSS | 1% | 7 |
+| JavaScript | 37% | 7 |
+| Java | 18% | 8 |
+| C# | 15% | 2 |
+| Python | 14% | 7 |
+| TypeScript | 7% | 1 |
+| Vue | 3% | 1 |
+| CSS | 3% | 7 |
+| Svelte | 3% | 1 |
 | Makefile | 0% | 5 |
 | HTML | 0% | 5 |
 
 ### Skills / tech stack
 | Category | Technologies (from detected data) |
 |----------|-----------------------------------|
-| Languages | `Java`, `C#`, `Python`, `JavaScript`, `TypeScript`, `Vue`, `Svelte`, `CSS`, `Makefile`, `HTML`, `Dockerfile`, `Shell`, `Mako`, `Batchfile` |
+| Languages | `JavaScript`, `Java`, `C#`, `Python`, `TypeScript`, `Vue`, `CSS`, `Svelte`, `Makefile`, `HTML`, `Dockerfile`, `PLpgSQL`, `Shell`, `Mako`, `Batchfile` |
 
 ### Repository freshness
 | Bucket | Count |
 |--------|-------|
 | Active | 4 |
-| Recent | 3 |
-| Stale | 10 |
+| Recent | 2 |
+| Stale | 11 |
 | Archived | 6 |
 
 _Commit activity charts will appear once GitHub finishes computing stats for this organization. The next scheduled run will include them._
