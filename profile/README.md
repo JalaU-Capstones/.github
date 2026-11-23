@@ -52,9 +52,9 @@ Frontend client for the Qatu Marketplace, a digital marketplace for buyers and s
 
 [Repository](https://github.com/JalaU-Capstones/qatu-client)
 
-Issues: 6
+Issues: 2
 
-Updated: 2026-11-16
+Updated: 2026-11-23
 
 </td>
 <td width="50%">
@@ -67,9 +67,9 @@ Qatu (Quechua word for "store") is an online digital marketplace where sellers c
 
 [Repository](https://github.com/JalaU-Capstones/qatu-api) · [License](https://api.github.com/licenses/mit)
 
-Issues: 7
+Issues: 1
 
-Updated: 2026-11-16
+Updated: 2026-11-23
 
 </td>
 </tr>
@@ -309,7 +309,7 @@ REST API para gestión de usuarios y partidas de Tic-Tac-Toe.
 
 Issues: 1
 
-Updated: 2026-11-09
+Updated: 2026-11-23
 
 </td>
 <td width="50%">
@@ -486,23 +486,23 @@ Updated: 2026-09-05
 | Total repositories | 23 |
 | Total stars | 0 |
 | Total forks | 0 |
-| Open issues | 19 |
+| Open issues | 9 |
 | Total commits | 0 |
 | Total contributors | 0 |
 | Total languages | 15 |
-| Last updated | 2026-11-16 09:30 UTC |
+| Last updated | 2026-11-23 11:14 UTC |
 
 ### Top languages
 | Language | Share | Repos |
 |----------|-------|-------|
-| JavaScript | 37% | 7 |
-| Java | 18% | 8 |
-| C# | 15% | 2 |
+| JavaScript | 39% | 7 |
+| Java | 17% | 8 |
+| C# | 14% | 2 |
 | Python | 14% | 7 |
-| TypeScript | 7% | 1 |
+| TypeScript | 6% | 1 |
 | Vue | 3% | 1 |
 | CSS | 3% | 7 |
-| Svelte | 3% | 1 |
+| Svelte | 2% | 1 |
 | Makefile | 0% | 5 |
 | HTML | 0% | 5 |
 
@@ -514,8 +514,8 @@ Updated: 2026-09-05
 ### Repository freshness
 | Bucket | Count |
 |--------|-------|
-| Active | 4 |
-| Recent | 2 |
+| Active | 3 |
+| Recent | 3 |
 | Stale | 11 |
 | Archived | 6 |
 
